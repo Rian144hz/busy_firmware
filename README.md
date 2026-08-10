@@ -1,23 +1,23 @@
 # Busy
 
-**Robô de atendimento autônomo para o varejo brasileiro.**
+Robô de atendimento autônomo para o varejo brasileiro.
 
-O Busy é um assistente físico de loja, de baixo custo, que recebe o cliente, exibe mensagens em uma tela OLED e se move (rosto + pescoço mecânicos) para humanizar a experiência de compra. Feito para pequenos comércios que não têm orçamento para soluções de automação caras.
+O Busy é um assistente físico de loja, de baixo custo, que recebe o cliente, exibe mensagens em uma tela OLED e se move (rosto e pescoço mecânicos) para humanizar a experiência de compra. Projetado para pequenos comércios que não têm orçamento para soluções de automação caras.
 
-> Status: protótipo em desenvolvimento — firmware funcional, hardware em aquisição.
+Status: protótipo em desenvolvimento — firmware funcional, hardware em aquisição.
 
 ---
 
-## Por que existe
+## Visão
 
-Pequenos lojistas no interior (como Paulo Afonso - BA) não têm acesso a tecnologia de atendimento que grandes redes têm. O Busy nasce como uma alternativa **aberta e barata**: um robô que qualquer comerciante possa ter na loja, com peças de poucos reais e software livre.
+Pequenos lojistas no interior (como Paulo Afonso - BA) não têm acesso à tecnologia de atendimento que grandes redes possuem. O Busy nasce como uma alternativa aberta e de baixo custo: um robô que qualquer comerciante possa instalar na loja, com peças de poucos reais e software livre.
 
-## O que ele faz (visão do produto)
+## O que o produto faz
 
-- Recebe o cliente com uma **expressão** na tela (sorrindo, neutro, animado)
-- Faz **movimentos** físicos (acena, olha para cima/baixo) via servos pan/tilt
-- Consulta um **cérebro** que decide, momento a momento, o que exibir
-- Roda em um ESP32-S3 (microcontrolador de ~R$ 115)
+- Recebe o cliente com uma expressão na tela (sorrindo, neutro, animado)
+- Executa movimentos físicos (acena, olha para cima/baixo) via servos pan/tilt
+- Consulta um cérebro que decide, momento a momento, o que exibir
+- Roda em um ESP32-S3 (microcontrolador de aproximadamente R$ 115)
 
 ---
 
@@ -31,20 +31,20 @@ Pequenos lojistas no interior (como Paulo Afonso - BA) não têm acesso a tecnol
 | Movimento | ESP32Servo (MG90S x2, pan/tilt) |
 | Conectividade | WiFi (HTTP polling) |
 | Cérebro | Python + Flask (servidor local) |
-| Formato de mensagem | JSON (`expressao`, `movimento`) |
+| Formato de mensagem | JSON (campos `expressao`, `movimento`) |
 
 ## Arquitetura
 
 ```
-[Busy / ESP32-S3]  --HTTP GET /proximo-->  [Cérebro Flask]  --(futuro)-->  [Hermes / IA]
+[Busy / ESP32-S3]  -- HTTP GET /proximo -->  [Cérebro Flask]  -- (futuro) -->  [IA conversacional]
    OLED + servos                                 decide ação
 ```
 
-O ESP32 é propositalmente "burro": ele apenas exibe e move. A inteligência fica no cérebro, que hoje é um servidor local simples e, no futuro, pode ser uma IA conversando com o cliente.
+O ESP32 é deliberadamente "burro": apenas exibe e move. A inteligência reside no cérebro, que hoje é um servidor local simples e, no futuro, pode ser um agente de IA interagindo com o cliente.
 
 ---
 
-## Como rodar (modo desenvolvedor)
+## Como executar (ambiente de desenvolvimento)
 
 ### Pré-requisitos
 - PlatformIO instalado no VS Code
@@ -65,7 +65,7 @@ O cérebro sobe em `http://0.0.0.0:8000` e responde `/proximo` com a próxima a�
 - Abra a pasta `busy_firmware` no VS Code (extensão PlatformIO)
 - Edite `src/config.h` com seu WiFi e o IP da máquina rodando o cérebro
 - Conecte o ESP32-S3 via USB
-- Botão **Upload**
+- Botão "Upload"
 
 ### 3. Teste sem hardware (opcional)
 O cérebro pode ser testado isoladamente:
@@ -85,7 +85,7 @@ curl http://localhost:8000/proximo
 | Servo PAN | 13 |
 | Servo TILT | 14 |
 
-> ⚠️ Pinos ainda sujeitos a ajuste conforme montagem final do protótipo.
+Os pinos ainda estão sujeitos a ajuste conforme a montagem final do protótipo.
 
 ---
 
@@ -94,7 +94,7 @@ curl http://localhost:8000/proximo
 - [x] Firmware base (display + servo + wifi)
 - [x] Cérebro Flask local
 - [ ] Aquisição das peças (kit ~R$ 360)
-- [ ] Integração com IA (Hermes como cérebro conversacional)
+- [ ] Integração com IA (agente como cérebro conversacional)
 - [ ] Case físico (impressão 3D)
 - [ ] Modo autônomo em loja real (piloto)
 
@@ -102,6 +102,6 @@ curl http://localhost:8000/proximo
 
 ## Sobre
 
-Projeto pessoal de **Matheus Rian** (Ciência da Computação, IFBA Paulo Afonso), com o objetivo de transformar em produto a ideia de um robô de atendimento acessível para o varejo brasileiro.
+Projeto pessoal de Matheus Rian (Ciência da Computação, IFBA Paulo Afonso), com o objetivo de transformar em produto a ideia de um robô de atendimento acessível para o varejo brasileiro.
 
-*Em construção — feedbacke e contribuições são bem-vindos.*
+Em construção — feedback e contribuições são bem-vindos.
